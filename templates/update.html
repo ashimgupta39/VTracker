@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block image %}<img class="circle" src="https://media.istockphoto.com/vectors/car-logo-with-circle-hand-colorful-logo-vector-id1064271428"/>{% endblock image %}
+{% block main %}
+<div class="form">
+    <form method="POST" action="" enctype="multipart/form-data">
+    <div class="form-group" >
+    {% csrf_token %}
+        <label  for="exampleInputEmail1">Vehicle Registration Plate No.</label>
+        <input name="regno" value="{{vehicles.regno}}" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Plate No.">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">On/Off State</label>
+        <input name="state" value="{{vehicles.state}}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Is the Vehicle On or Off?">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">Speed</label>
+        <input name="speed" value="{{vehicles.speed}}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Current Speed of the Vehicle">
+    </div>
+    <div class="form-groupmy-1">
+        <label for="exampleInputPassword1">Average Speed</label>
+        <input name="avgspeed" value="{{vehicles.avgspeed}}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Avergae Speed of the Vehicle">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">Temprature</label>
+        <input name="temp" type="text" value="{{vehicles.temp}}" class="form-control" id="exampleInputPassword1" placeholder="Enter Temprature of the Vehicle">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">Fuel Level</label>
+        <input name="fuel" type="text" value="{{vehicles.fuel}}" class="form-control" id="exampleInputPassword1" placeholder="Enter Fuel Level of the Vehicle">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">Engine Status</label>
+        <input name="engine" value="{{vehicles.engine}}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Engine Status of the Vehicle">
+    </div>
+    <div class="form-group my-1">
+        <label for="exampleInputPassword1">Location</label>
+        <input name="location" value="{{vehicles.location}}" type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter the Current Location of the Vehicle">
+    </div>
+    {% comment %} <div class="form-group my-1">
+    <label for="exampleFormControlFile1">Select The Vehicle Image</label>
+    <input name="image" {%if vehicles.image%} value="{{vehicles.image.url}}" {%endif%} type="file" class="form-control-file" id="exampleFormControlFile1">
+   </div> {% endcomment %}
+    <input type="submit"  class="form-control btn btn-dark my-2" id="exampleFormControlFile1">
+</div>
+{% endblock main %}

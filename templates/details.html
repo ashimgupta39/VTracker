@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block image %}<img class="circle" src="https://media.istockphoto.com/vectors/car-logo-with-circle-hand-colorful-logo-vector-id1064271428"/>{% endblock image %} 
+{% block main %}
+<div class="detailsgrid">
+<div class="item item1">
+    <div class="innercircle">
+    {%if vehicles.image %}
+    <img  class="innercircle" src="{{vehicles.image.url }}"/>
+    {% else %}
+    <img class="innercircle" src="https://media.istockphoto.com/vectors/car-logo-with-circle-hand-colorful-logo-vector-id1064271428" />
+    {% endif %}
+    </div>
+    <div class="noplate" ><div style="position:relative;left:10px">Number Plate</div><div class="nos"> {{vehicles.regno}}</div></div>
+</div>
+<div class="item item2">
+    {% if vehicles.state == "On" %}
+    <div style="background:green;color:white" class="state">ON</div> 
+    <div style="background:white;color:red;border:3px solid red;" class="state">OFF</div> 
+    {% else %}
+    <div style="color:green;background:white;border:3px solid green" class="state">ON</div> 
+    <div style="background:red;color:white;" class="state">OFF</div> 
+    {%endif%}
+</div>
+<div class="item item3">
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/maps/maps.css'>
+<script onload="mapContent();" src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/maps/maps-web.min.js" defer></script>
+
+<style>
+#map {
+	height: 100%;
+	width: 100%;
+    border:3px solid black
+}
+
+@media only screen and (max-width: 767px) {
+	#map {
+		height: 300px;
+	}
+}
+.mapboxgl-popup-content{
+    position: relative;
+    background: #fff;
+    color: black;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 10%);
+    padding: 10px 10px 15px;
+    pointer-events: auto;
+}
+#marker {
+  background-image: url('/wp-content/uploads/2021/04/copywriter-logo-dark.svg');
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+}
+
+</style>
+
+<div id='map'></div>
+<script>
+	function mapContent(){
+		var api_key = 'K202i9iEPc541iusbY93Qraggy3zJdiZ';
+		var latAndLong = {lat: 31.32606, lng: 75.57562}; 
+		var zoomLevel = 14;
+		var yourAddress = '{{vehicles.location}}';
+
+		var map = tt.map({
+		    container: 'map',
+		    key: api_key,
+		    center: latAndLong,
+		    zoom: zoomLevel
+		});
+
+		var marker = new tt.Marker().setLngLat(latAndLong).addTo(map);
+	 	
+	 	// FOR CUSTOM MARKER
+		//var customMarker = document.createElement('div');
+		//customMarker.id = 'marker';
+		//var marker = new tt.Marker({element: customMarker}).setLngLat(latAndLong).addTo(map);
+
+		var popupOffsets = {
+		  top: [0, 0],
+		  bottom: [0, -70],
+		  'bottom-right': [0, -70],
+		  'bottom-left': [0, -70],
+		  left: [25, -35],
+		  right: [-25, -35]
+		}
+
+		var popup = new tt.Popup({offset: popupOffsets}).setHTML(yourAddress);
+	    marker.setPopup(popup).togglePopup();
+
+    }
+
+</script>
+ </div>
+<div class="item"><div style="position:relative;left:10px">Speed</div><div style="font-size:60px"class="nos">{{vehicles.speed}}</div></div> 
+<div class="item"><div style="position:relative;left:10px">Average Speed</div><div style="font-size:60px"class="nos">{{vehicles.avgspeed}}</div></div> 
+<div class="item"><div style="position:relative;left:10px">Engine Status</div><div style="font-size:60px"class="nos">{{vehicles.engine}}</div></div> 
+<div class="item"><div style="position:relative;left:10px">Fuel Level</div><div style="font-size:60px"class="nos">{{vehicles.fuel}}</div></div> 
+<div class="item"><div style="position:relative;left:10px">Temprature</div><div style="font-size:60px"class="nos">{{vehicles.temp}}</div></div> 
+</div>
+{% endblock main %}
